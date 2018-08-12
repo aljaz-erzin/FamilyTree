@@ -171,8 +171,19 @@ public class App
         }
         return result;
     }
-
-    private static ResultTree[] mainFunction(PriorityQueue<Person> pq, int[][] child_parent, LinkedList<Integer>[] listsOfParents, ResultTree[] result)
+    private static boolean child_parent_cycle(LinkedList<Integer>[] listsOfParents, int tmpChild, int tmpParent)
+    {
+        Integer tmpInt = tmpChild;
+        for (int i = 0; i < listsOfParents[tmpParent].size(); i++)
+        {
+                if (listsOfParents[tmpParent].get(i) == tmpChild)
+                {
+                    return true;
+                }
+        }
+        return false;
+    }
+    private static ResultTree[] mainFunction(String[] names, PriorityQueue<Person> pq, int[][] child_parent, LinkedList<Integer>[] listsOfParents, ResultTree[] result)
     {
         while (!pq.isEmpty())
         {
@@ -184,6 +195,11 @@ public class App
                 if (tmpParent == tmpPerson.name)
                 {
                     int tmpChild = child_parent[i][0];
+                    if (child_parent_cycle(listsOfParents, tmpChild, tmpParent))
+                    {
+                        System.out.println(names[tmpChild]+ " and " + names[tmpParent] + " can not be both childs and parents for one another!");
+                        continue;
+                    }
                     listsOfParents[tmpChild] = (LinkedList) listsOfParents[tmpParent].clone();
                     listsOfParents[tmpChild].add(tmpParent);
                     for (int j = 0; j < result.length; j++)
@@ -205,18 +221,12 @@ public class App
                                 boolean flag = true;
                                 for (int k = 1; k < listsOfParents[tmpChild].size(); k++)
                                 {
-
                                     flag = false;
                                     int tmpElList = listsOfParents[tmpChild].get(k);
                                     boolean flag1 = true;
 
                                     while (tmpElList != tmpElTree.name)
                                     {
-                                        if (tmpElTree.brother == null)
-                                        {
-                                            System.out.println("Warning!");
-                                            return null;
-                                        }
                                         tmpElTree = tmpElTree.brother;
                                     }
 
@@ -272,6 +282,8 @@ public class App
         return result;
     }
 
+
+
     public static void main(String[] args)  throws IOException
     {
 
@@ -296,28 +308,11 @@ public class App
 
         LinkedList<Integer>[] listsOfParents = initLinkedList(names.length);
 
-        result = mainFunction(pq, child_parent, listsOfParents, result);
+        result = mainFunction(names, pq, child_parent, listsOfParents, result);
         for (int i = 0; i < result.length; i++)
         {
             result[i].print(names);
         }
-
-       /* System.out.println("FIRST: " + names[pq.poll().name]);
-        System.out.println("Second: " + names[pq.poll().name]);
-        Iterator<Person>  iterator = pq.iterator();
-
-        System.out.println("Priority queue values are: ");
-
-        while (iterator.hasNext()) {
-            Person p = iterator.next();
-            System.out.println("name: "+ names[p.name]+ "  numOFPArents: "+ p.numOfParents);
-        }
-        for (int i = 0; i < child_parent.length; i++)
-        {
-            System.out.println(child_parent[i][0] + "   "+ child_parent[i][1]);
-        }*/
-
-
     }
 
 
