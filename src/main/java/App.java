@@ -1,11 +1,10 @@
 import java.util.*;
 import java.io.*;
 
-
 public class App
 {
 
-    private static String[][] expend2DArray(String[][] oldArray)
+    public static String[][] expend2DArray(String[][] oldArray)
     {
 
         String[][] newArray = new String[oldArray.length+1][2];
@@ -19,7 +18,7 @@ public class App
         return newArray;
     }
 
-    private static String[] expend1DArray(String[] oldArray)
+    public static String[] expend1DArray(String[] oldArray)
     {
 
         String[] newArray = new String[oldArray.length+1];
@@ -32,7 +31,7 @@ public class App
         return newArray;
     }
 
-    private static boolean checkIfExists(String name, String[] savedNames)
+    public static boolean checkIfExists(String name, String[] savedNames)
     {
         for (int i = 0; i < savedNames.length; i++)
         {
@@ -44,7 +43,7 @@ public class App
         return false;
     }
 
-    private static String[][] readInput(Scanner sc, String[][] array)
+    public static String[][] readInput(Scanner sc, String[][] array)
     {
         while (sc.hasNext())
         {
@@ -57,7 +56,7 @@ public class App
         return array;
     }
 
-    private static String[] rememberNames(Scanner sc, String[][] child_parent, String[] names)
+    public static String[] rememberNames(Scanner sc, String[][] child_parent, String[] names)
     {
         int i = 0;
         while (i < child_parent.length)
@@ -79,7 +78,7 @@ public class App
         return names;
     }
 
-    private static int[][] convertToNumbers(String[][] child_parent, String[] names)
+    public static int[][] convertToNumbers(String[][] child_parent, String[] names)
     {
         int[][] array = new int[child_parent.length][2];
         for (int i = 0; i < names.length; i++)
@@ -100,7 +99,7 @@ public class App
         return array;
     }
 
-    private static int[] countParents(int[][] child_parent, int len)
+    public static int[] countParents(int[][] child_parent, int len)
     {
         int[] array = new int[len];
         for (int i = 0; i < array.length; i++)
@@ -116,7 +115,7 @@ public class App
         return array;
     }
 
-    private static PriorityQueue<Person> makePQ(PriorityQueue<Person> pq, String[] names, int[] numOfParents)
+    public static PriorityQueue<Person> makePQ(PriorityQueue<Person> pq, String[] names, int[] numOfParents)
     {
         for (int i = 0; i < names.length; i++)
         {
@@ -126,7 +125,7 @@ public class App
         return pq;
     }
 
-    private static LinkedList<Integer>[] initLinkedList(int len)
+    public static LinkedList<Integer>[] initLinkedList(int len)
     {
         LinkedList<Integer>[] list =  new LinkedList[len];
         for (int i = 0; i < list.length; i++)
@@ -136,7 +135,7 @@ public class App
         return list;
     }
 
-    private static String findFirstParents(int[] numOfParents)
+    public static String findFirstParents(int[] numOfParents)
     {
         String firstParents = "";
         for (int i = 0; i < numOfParents.length; i++)
@@ -149,7 +148,7 @@ public class App
         return firstParents;
     }
 
-    private static int[] convertToArray(String firstParents_string)
+    public static int[] convertToArray(String firstParents_string)
     {
         String[] splitFirstParents = firstParents_string.split(" ");
         int[] firstParents = new int[splitFirstParents.length];
@@ -160,7 +159,7 @@ public class App
         return firstParents;
     }
 
-    private static ResultTree[] initResultTree(int[] numOfParents)
+    public static ResultTree[] initResultTree(int[] numOfParents)
     {
         String firstParents_string = findFirstParents(numOfParents);
         int[] firstParents = convertToArray(firstParents_string);
@@ -171,7 +170,8 @@ public class App
         }
         return result;
     }
-    private static boolean child_parent_cycle(LinkedList<Integer>[] listsOfParents, int tmpChild, int tmpParent)
+
+    public static boolean child_parent_cycle(LinkedList<Integer>[] listsOfParents, int tmpChild, int tmpParent)
     {
         Integer tmpInt = tmpChild;
         for (int i = 0; i < listsOfParents[tmpParent].size(); i++)
@@ -183,7 +183,8 @@ public class App
         }
         return false;
     }
-    private static ResultTree[] mainFunction(String[] names, PriorityQueue<Person> pq, int[][] child_parent, LinkedList<Integer>[] listsOfParents, ResultTree[] result)
+
+    public static ResultTree[] mainFunction(String[] names, PriorityQueue<Person> pq, int[][] child_parent, LinkedList<Integer>[] listsOfParents, ResultTree[] result)
     {
         while (!pq.isEmpty())
         {
@@ -197,7 +198,7 @@ public class App
                     int tmpChild = child_parent[i][0];
                     if (child_parent_cycle(listsOfParents, tmpChild, tmpParent))
                     {
-                        System.out.println(names[tmpChild]+ " and " + names[tmpParent] + " can not be both childs and parents for one another!");
+                        System.out.println(names[tmpChild]+ " and " + names[tmpParent] + " can not be both children and parents for one another!");
                         continue;
                     }
                     listsOfParents[tmpChild] = (LinkedList) listsOfParents[tmpParent].clone();
@@ -281,8 +282,6 @@ public class App
 
         return result;
     }
-
-
 
     public static void main(String[] args)  throws IOException
     {
