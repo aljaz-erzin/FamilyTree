@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,7 +38,8 @@ class AppTest {
     @Test
     void child_parent_cycle()  throws Exception
     {
-
+        LinkedList<Person>[] listsOfParents = new LinkedList[2];
+        listsOfParents[0] = new LinkedList<Person>();
     }
 
     @Test

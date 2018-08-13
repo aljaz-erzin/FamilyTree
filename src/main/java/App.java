@@ -171,21 +171,20 @@ public class App
         return result;
     }
 
-    public static boolean child_parent_cycle(LinkedList<Integer>[] listsOfParents, int tmpChild, int tmpParent)
+    public static void child_parent_cycle(LinkedList<Integer>[] listsOfParents, int tmpChild, int tmpParent, String[] names) throws Exception
     {
         Integer tmpInt = tmpChild;
         for (int i = 0; i < listsOfParents[tmpParent].size(); i++)
         {
                 if (listsOfParents[tmpParent].get(i) == tmpChild)
                 {
-                    return true;
+                    throw new IllegalArgumentException(names[tmpChild]+ " and " + names[tmpParent] + " can not be both children and parents for one another!");
+
                 }
         }
-        return false;
     }
 
-    public static ResultTree[] mainFunction(String[] names, PriorityQueue<Person> pq, int[][] child_parent, LinkedList<Integer>[] listsOfParents, ResultTree[] result)
-    {
+    public static ResultTree[] mainFunction(String[] names, PriorityQueue<Person> pq, int[][] child_parent, LinkedList<Integer>[] listsOfParents, ResultTree[] result) throws Exception {
         while (!pq.isEmpty())
         {
             Person tmpPerson = pq.poll();
@@ -196,11 +195,9 @@ public class App
                 if (tmpParent == tmpPerson.name)
                 {
                     int tmpChild = child_parent[i][0];
-                    if (child_parent_cycle(listsOfParents, tmpChild, tmpParent))
-                    {
-                        System.out.println(names[tmpChild]+ " and " + names[tmpParent] + " can not be both children and parents for one another!");
-                        continue;
-                    }
+
+                    child_parent_cycle(listsOfParents, tmpChild, tmpParent, names);
+
                     listsOfParents[tmpChild] = (LinkedList) listsOfParents[tmpParent].clone();
                     listsOfParents[tmpChild].add(tmpParent);
                     for (int j = 0; j < result.length; j++)
@@ -283,7 +280,7 @@ public class App
         return result;
     }
 
-    public static void main(String[] args)  throws IOException
+    public static void main(String[] args) throws Exception
     {
 
         FileReader inputFile = new FileReader("data.txt");
