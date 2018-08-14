@@ -56,7 +56,7 @@ public class App
         return array;
     }
 
-    public static String[] rememberNames(Scanner sc, String[][] child_parent, String[] names)
+    public static String[] rememberNames(String[][] child_parent, String[] names)
     {
         int i = 0;
         while (i < child_parent.length)
@@ -115,9 +115,9 @@ public class App
         return array;
     }
 
-    public static PriorityQueue<Person> makePQ(PriorityQueue<Person> pq, String[] names, int[] numOfParents)
+    public static PriorityQueue<Person> makePQ(PriorityQueue<Person> pq, int[] numOfParents)
     {
-        for (int i = 0; i < names.length; i++)
+        for (int i = 0; i < numOfParents.length; i++)
         {
             Person newPerson = new Person(i, numOfParents[i]);
             pq.add(newPerson);
@@ -184,7 +184,8 @@ public class App
         }
     }
 
-    public static ResultTree[] mainFunction(String[] names, PriorityQueue<Person> pq, int[][] child_parent, LinkedList<Integer>[] listsOfParents, ResultTree[] result) throws Exception {
+    public static ResultTree[] mainFunction(String[] names, PriorityQueue<Person> pq, int[][] child_parent, LinkedList<Integer>[] listsOfParents, ResultTree[] result) throws Exception
+    {
         while (!pq.isEmpty())
         {
             Person tmpPerson = pq.poll();
@@ -291,7 +292,7 @@ public class App
         child_parent_String = readInput(sc, child_parent_String);
 
         String[] names = new String[0];
-        names = rememberNames(sc, child_parent_String, names);
+        names = rememberNames(child_parent_String, names);
 
         // From now on numbers instead of names:
         int[][] child_parent = convertToNumbers(child_parent_String, names);
@@ -300,7 +301,7 @@ public class App
         ResultTree[] result = initResultTree(numOfParents);
 
         PriorityQueue<Person> pq = new PriorityQueue<Person>(names.length, new SortingAlgorithm());
-        pq = makePQ(pq, names, numOfParents);
+        pq = makePQ(pq, numOfParents);
 
         LinkedList<Integer>[] listsOfParents = initLinkedList(names.length);
 
