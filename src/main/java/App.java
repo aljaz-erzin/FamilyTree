@@ -80,6 +80,7 @@ public class App
 
     public static int[][] convertToNumbers(String[][] child_parent, String[] names)
     {
+        // Method converts names to numbers
         int[][] array = new int[child_parent.length][2];
         for (int i = 0; i < names.length; i++)
         {
@@ -101,6 +102,7 @@ public class App
 
     public static int[] countParents(int[][] child_parent, int len)
     {
+        //Method count how many parents does each child have
         int[] array = new int[len];
         for (int i = 0; i < array.length; i++)
         {
@@ -117,6 +119,7 @@ public class App
 
     public static PriorityQueue<Person> makePQ(PriorityQueue<Person> pq, int[] numOfParents)
     {
+        // Children with less parents will be first
         for (int i = 0; i < numOfParents.length; i++)
         {
             Person newPerson = new Person(i, numOfParents[i]);
@@ -173,6 +176,7 @@ public class App
 
     public static void child_parent_cycle(LinkedList<Integer>[] listsOfParents, int tmpChild, int tmpParent, String[] names) throws Exception
     {
+        // Method checks  for a cycles!
         Integer tmpInt = tmpChild;
         for (int i = 0; i < listsOfParents[tmpParent].size(); i++)
         {
@@ -294,8 +298,10 @@ public class App
         String[] names = new String[0];
         names = rememberNames(child_parent_String, names);
 
-        // From now on numbers instead of names:
+        //Convert names to numbers for easier indexing
         int[][] child_parent = convertToNumbers(child_parent_String, names);
+        // child_parent[0] = {1, 0}, before child_parent[0] = {"Adam", "Ivan"};
+
         int[] numOfParents = countParents(child_parent, names.length);
 
         ResultTree[] result = initResultTree(numOfParents);
@@ -303,9 +309,11 @@ public class App
         PriorityQueue<Person> pq = new PriorityQueue<Person>(names.length, new SortingAlgorithm());
         pq = makePQ(pq, numOfParents);
 
-        LinkedList<Integer>[] listsOfParents = initLinkedList(names.length);
+        LinkedList<Integer>[] listsOfParents = initLinkedList(names.length); // Lists for all nodes
 
         result = mainFunction(names, pq, child_parent, listsOfParents, result);
+        // Element in result array is a tree -> result[0] = {Ivan, 0} -> {Adam, 1}...
+
         for (int i = 0; i < result.length; i++)
         {
             result[i].print(names);
