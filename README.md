@@ -1,6 +1,6 @@
-                        **** FAMILY-TREE ****
-                    
-            Application FamilyTree builds a family tree. 
+                                            **** FAMILY-TREE ****
+                                        
+                                Application FamilyTree builds a family tree. 
 
 Package contains:
 
