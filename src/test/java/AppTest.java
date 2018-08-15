@@ -1,13 +1,14 @@
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import static org.junit.Assert.*;
 import java.io.*;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 
-class AppTest {
+public class AppTest
+{
 
     @Test
-    void countParentsTest() throws Exception
+    public void countParentsTest() throws Exception
     {
         int[][] child_parent = {{1, 0},
                 {2, 1},
@@ -30,7 +31,7 @@ class AppTest {
     }
 
     @Test
-    void makePQTest()  throws Exception
+    public void makePQTest()  throws Exception
     {
         int[] numOfParents = {0, 1, 2, 1, 1, 2, 1, 1, 1, 0, 1, 1, 1, 0, 1};
         PriorityQueue<Person> methodResult = new PriorityQueue<Person>(numOfParents.length, new SortingAlgorithm());
@@ -56,7 +57,7 @@ class AppTest {
     }
 
     @Test
-    void child_parent_cycleTest()  throws Exception
+    public void child_parent_cycleTest()  throws Exception
     {
         LinkedList<Integer>[] listsOfParents = new LinkedList[2];
         listsOfParents[0] = new LinkedList<Integer>();
@@ -75,7 +76,7 @@ class AppTest {
     }
 
     @Test
-    void mainFunctionTest() throws Exception
+    public void mainFunctionTest() throws Exception
     {
         FileReader inputFile = new FileReader("test_data.txt");
         BufferedReader bufferReader = new BufferedReader(inputFile);

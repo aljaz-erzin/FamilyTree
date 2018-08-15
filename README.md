@@ -58,4 +58,5 @@ Expected output if test_data.txt is used in App.java:
                 Amadej
 
 Run tests:
-         
+
+    mvn test
