@@ -22,6 +22,7 @@ Package contains:
 Run application:
 
     cd FamilyTree  
+    mvn clean install
     mvn compile
     mvn exec:java -Dexec.mainClass=App;
 
